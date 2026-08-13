@@ -6,6 +6,18 @@ searchable view of your existing Chrome bookmarks.
 The extension runs locally in the browser. It has no build step, no external
 dependencies, and does not send bookmark data to a server.
 
+## Screenshots
+
+### Bookmark overview
+
+![Bookmark overview with pinned bookmarks, folders, and bookmark cards](assets/screenshots/overview.jpg)
+
+| Search bookmarks | Browse folders |
+| --- | --- |
+| ![Search results for Chrome bookmarks](assets/screenshots/search.jpg) | ![Bookmarks inside the Development folder](assets/screenshots/folder.jpg) |
+
+The screenshots use fictional sample bookmarks; no personal bookmark data is included.
+
 ## Features
 
 - Browse Chrome bookmark folders in a collapsible sidebar.
