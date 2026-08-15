@@ -1,5 +1,6 @@
 import { getBookmarkIconText } from "./grid.js";
 import { bindBookmarkOpen } from "../bookmarkNavigation.js";
+import { t } from "../i18n.js";
 
 export function renderPinnedBar(container, pinnedIds, bookmarkById, onUnpin) {
   container.replaceChildren();
@@ -9,7 +10,7 @@ export function renderPinnedBar(container, pinnedIds, bookmarkById, onUnpin) {
   if (!pinnedBookmarks.length) {
     const empty = document.createElement("p");
     empty.className = "pinned-empty";
-    empty.textContent = "从下方书签列表固定常用书签";
+    empty.textContent = t("emptyPinnedBar");
     container.append(empty);
     return;
   }
@@ -35,15 +36,15 @@ function createPinnedCard(bookmark, onUnpin) {
 
   const title = document.createElement("span");
   title.className = "pinned-title";
-  title.textContent = bookmark.title || bookmark.url || "未命名";
+  title.textContent = bookmark.title || bookmark.url || t("untitledBookmark");
 
   openButton.append(icon, title);
 
   const unpinButton = document.createElement("button");
   unpinButton.className = "pinned-remove";
   unpinButton.type = "button";
-  unpinButton.title = "取消固定";
-  unpinButton.ariaLabel = `取消固定${bookmark.title}`;
+  unpinButton.title = t("unpin");
+  unpinButton.ariaLabel = t("unpinSpecific", bookmark.title);
   unpinButton.textContent = "×";
   unpinButton.addEventListener("click", () => onUnpin(bookmark));
 

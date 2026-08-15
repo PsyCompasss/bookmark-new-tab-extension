@@ -1,0 +1,60 @@
+{
+  "extensionName": { "message": "Bookmark Dashboard – New Tab" },
+  "extensionDescription": { "message": "Turn your Chrome bookmarks into a searchable, privacy-friendly new-tab dashboard." },
+  "localeCode": { "message": "en" },
+  "pageTitle": { "message": "Bookmark Dashboard" },
+  "pinnedBookmarksAriaLabel": { "message": "Pinned bookmarks" },
+  "pinnedBookmarksEyebrow": { "message": "Pinned bookmarks" },
+  "appTitle": { "message": "Bookmarks" },
+  "searchPlaceholder": { "message": "Search bookmarks" },
+  "searchAriaLabel": { "message": "Search bookmarks" },
+  "foldersAriaLabel": { "message": "Bookmark folders" },
+  "foldersTitle": { "message": "Folders" },
+  "bookmarksAriaLabel": { "message": "Bookmarks" },
+  "folderEyebrow": { "message": "Folder" },
+  "searchEyebrow": { "message": "Search" },
+  "searchResultsTitle": {
+    "message": "Results for \"$QUERY$\"",
+    "placeholders": { "query": { "content": "$1" } }
+  },
+  "bookmarkCountOne": {
+    "message": "$COUNT$ bookmark",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "bookmarkCountOther": {
+    "message": "$COUNT$ bookmarks",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reorderHint": { "message": "Drag to change the order in Chrome bookmarks" },
+  "initializationError": { "message": "Failed to initialize Bookmark Dashboard" },
+  "moveBookmarkError": { "message": "Failed to move bookmark" },
+  "refreshBookmarksError": { "message": "Failed to refresh bookmarks" },
+  "loadBookmarksErrorTitle": { "message": "Unable to load bookmarks" },
+  "errorEyebrow": { "message": "Error" },
+  "loadBookmarksErrorMessage": { "message": "Refresh the page or check the extension permissions." },
+  "noMatchingBookmarks": { "message": "No matching bookmarks" },
+  "emptyFolder": { "message": "This folder has no bookmarks" },
+  "untitledBookmark": { "message": "Untitled" },
+  "pinBookmark": { "message": "Pin bookmark" },
+  "unpin": { "message": "Unpin" },
+  "pinSpecific": {
+    "message": "Pin $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "unpinSpecific": {
+    "message": "Unpin $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "bookmarkIconFallback": { "message": "B" },
+  "emptyPinnedBar": { "message": "Pin frequently used bookmarks from the list below" },
+  "noFolders": { "message": "No folders" },
+  "expandFolder": {
+    "message": "Expand $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "collapseFolder": {
+    "message": "Collapse $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "untitledFolder": { "message": "Untitled folder" }
+}

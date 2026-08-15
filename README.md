@@ -1,6 +1,8 @@
-# Bookmark New Tab Extension / 书签新标签页
+# Bookmark Dashboard – New Tab / 书签桌面 – 新标签页
 
 [中文](#中文) · [English](#english)
+
+![Bookmark Dashboard demo showing search, folders, pinning, and drag-and-drop reordering](assets/store/demo/bookmark-dashboard-demo-en.gif)
 
 ## 中文
 
@@ -28,6 +30,7 @@
 - 通过拖放调整当前文件夹中的书签顺序。
 - 在当前标签页打开书签，或使用 Command/Ctrl + 单击在后台标签页打开。
 - 使用 `chrome.storage.local` 在本地保存已固定的书签 ID。
+- 根据 Chrome 界面语言自动显示中文或英文。
 
 ### 从源码安装
 
@@ -55,18 +58,23 @@
 manifest.json            扩展元数据和权限
 newtab.html              新标签页页面结构
 newtab.js                应用状态与事件协调
+i18n.js                  界面本地化工具
 bookmarkService.js       Chrome 书签 API 适配层
 bookmarkNavigation.js    书签打开行为
 treeBuilder.js           书签树标准化与遍历
 search.js                书签展平与搜索
 pinned.js                固定书签持久化
 ui/                      侧边栏、网格和固定栏渲染
+_locales/                中英文本地化文本
+assets/icons/            扩展图标
 styles.css               响应式玻璃风界面
 ```
 
 ### 隐私
 
 扩展不包含数据分析、广告、远程脚本或网络请求。书签内容始终保留在用户的浏览器配置中。
+
+详见[隐私政策](PRIVACY.md)。
 
 ### 许可证
 
@@ -92,6 +100,7 @@ See the [interface preview](#界面预览) above. Every screenshot uses fictiona
 - Drag bookmarks to reorder them within the selected folder.
 - Open a bookmark in the current tab, or use Command/Ctrl-click for a background tab.
 - Store pinned bookmark IDs locally with `chrome.storage.local`.
+- Automatically display English or Chinese based on Chrome's interface language.
 
 ### Install from source
 
@@ -119,18 +128,23 @@ This is a dependency-free Manifest V3 extension. Edit the HTML, CSS, or JavaScri
 manifest.json            Extension metadata and permissions
 newtab.html              New-tab page shell
 newtab.js                Application state and event coordination
+i18n.js                  Interface localization utilities
 bookmarkService.js       Chrome bookmarks API adapter
 bookmarkNavigation.js    Bookmark opening behavior
 treeBuilder.js           Bookmark tree normalization and traversal
 search.js                Bookmark flattening and search
 pinned.js                Pinned bookmark persistence
 ui/                      Sidebar, grid, and pinned-bar rendering
+_locales/                English and Chinese localization messages
+assets/icons/            Extension icons
 styles.css               Responsive glass-style interface
 ```
 
 ### Privacy
 
 The extension does not include analytics, advertising, remote scripts, or network requests. Bookmark content remains in the user's browser profile.
+
+See the [Privacy Policy](PRIVACY.md) for full details.
 
 ### License
 

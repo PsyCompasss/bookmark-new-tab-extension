@@ -1,10 +1,11 @@
 import { getTree, moveBookmark } from "./bookmarkService.js";
 import { buildTree, findNodeById, getFolderChildren } from "./treeBuilder.js";
-import { getPinnedIds, isPinned, pinBookmark, unpinBookmark } from "./pinned.js";
+import { getPinnedIds, isPinned, pinBookmark, setPinnedIds, unpinBookmark } from "./pinned.js";
 import { flattenBookmarks, searchBookmarks } from "./search.js";
 import { renderSidebar } from "./ui/sidebar.js";
 import { getFolderBookmarks, renderBookmarkGrid } from "./ui/grid.js";
 import { renderPinnedBar } from "./ui/pinnedBar.js";
+import { localizeDocument, t } from "./i18n.js";
 
 const state = {
   root: null,
@@ -17,10 +18,12 @@ const state = {
 };
 
 const elements = {};
+let bookmarkRefreshTimer = null;
 
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
+  localizeDocument();
   cacheElements();
 
   try {
@@ -29,14 +32,15 @@ async function init() {
     state.root = tree[0] || null;
     state.allBookmarks = flattenBookmarks(state.root);
     state.bookmarkById = new Map(state.allBookmarks.map((bookmark) => [bookmark.id, bookmark]));
-    state.pinnedIds = pinnedIds;
+    state.pinnedIds = await removeStalePinnedIds(pinnedIds);
     state.selectedFolder = getDefaultFolder();
 
     seedExpandedFolders(state.selectedFolder);
     wireSearch();
+    wireBookmarkChanges();
     renderApp();
   } catch (error) {
-    console.error("初始化书签新标签页失败", error);
+    console.error(t("initializationError"), error);
     renderFatalError();
   }
 }
@@ -49,6 +53,7 @@ function cacheElements() {
   elements.contentTitle = document.getElementById("contentTitle");
   elements.viewModeLabel = document.getElementById("viewModeLabel");
   elements.resultCount = document.getElementById("resultCount");
+  elements.reorderHint = document.getElementById("reorderHint");
 }
 
 function wireSearch() {
@@ -76,9 +81,11 @@ function renderContent() {
   const searchMode = query.length > 0;
   const bookmarks = searchMode ? searchBookmarks(state.allBookmarks, query) : getFolderBookmarks(state.selectedFolder);
 
-  elements.viewModeLabel.textContent = searchMode ? "搜索" : "文件夹";
-  elements.contentTitle.textContent = searchMode ? `"${query}" 的搜索结果` : state.selectedFolder?.title || "书签";
-  elements.resultCount.textContent = `${bookmarks.length} 个书签`;
+  elements.viewModeLabel.textContent = searchMode ? t("searchEyebrow") : t("folderEyebrow");
+  elements.contentTitle.textContent = searchMode ? t("searchResultsTitle", query) : state.selectedFolder?.title || t("appTitle");
+  const bookmarkCountKey = bookmarks.length === 1 ? "bookmarkCountOne" : "bookmarkCountOther";
+  elements.resultCount.textContent = t(bookmarkCountKey, String(bookmarks.length));
+  elements.reorderHint.hidden = searchMode;
 
   renderBookmarkGrid(elements.bookmarkGrid, {
     bookmarks,
@@ -153,6 +160,10 @@ async function handleMoveBookmark(bookmarkId, parentId, targetBookmarkInsertInde
   }
 
   const folderChildTargetIndex = getFolderChildIndexForBookmarkDrop(children, bookmarkId, adjustedBookmarkIndex);
+  const currentFolderChildIndex = children.findIndex((node) => node.id === bookmarkId);
+  const chromeMoveIndex = currentFolderChildIndex < folderChildTargetIndex
+    ? folderChildTargetIndex + 1
+    : folderChildTargetIndex;
   const previousChildren = [...children];
 
   applyLocalBookmarkMove(state.selectedFolder, bookmarkId, folderChildTargetIndex);
@@ -160,9 +171,9 @@ async function handleMoveBookmark(bookmarkId, parentId, targetBookmarkInsertInde
   renderContent();
 
   try {
-    await moveBookmark(bookmarkId, parentId, folderChildTargetIndex);
+    await moveBookmark(bookmarkId, parentId, chromeMoveIndex);
   } catch (error) {
-    console.error("移动书签失败", error);
+    console.error(t("moveBookmarkError"), error);
     state.selectedFolder.children = previousChildren;
     refreshBookmarkIndex();
     renderContent();
@@ -220,14 +231,51 @@ function refreshBookmarkIndex() {
   state.bookmarkById = new Map(state.allBookmarks.map((bookmark) => [bookmark.id, bookmark]));
 }
 
+async function removeStalePinnedIds(pinnedIds) {
+  const validIds = pinnedIds.filter((id) => state.bookmarkById.has(id));
+  if (validIds.length !== pinnedIds.length) {
+    return setPinnedIds(validIds);
+  }
+  return validIds;
+}
+
+function wireBookmarkChanges() {
+  const events = ["onCreated", "onRemoved", "onChanged", "onMoved", "onChildrenReordered", "onImportEnded"];
+  for (const eventName of events) {
+    chrome.bookmarks[eventName]?.addListener(scheduleBookmarkRefresh);
+  }
+}
+
+function scheduleBookmarkRefresh() {
+  window.clearTimeout(bookmarkRefreshTimer);
+  bookmarkRefreshTimer = window.setTimeout(refreshBookmarksFromChrome, 120);
+}
+
+async function refreshBookmarksFromChrome() {
+  const selectedFolderId = state.selectedFolder?.id;
+
+  try {
+    const rawTree = await getTree();
+    const tree = buildTree(rawTree);
+    state.root = tree[0] || null;
+    refreshBookmarkIndex();
+    state.pinnedIds = await removeStalePinnedIds(state.pinnedIds);
+    state.selectedFolder = findNodeById(state.root, selectedFolderId) || getDefaultFolder();
+    renderApp();
+  } catch (error) {
+    console.error(t("refreshBookmarksError"), error);
+  }
+}
+
 function renderFatalError() {
-  elements.contentTitle.textContent = "无法加载书签";
-  elements.viewModeLabel.textContent = "错误";
+  elements.contentTitle.textContent = t("loadBookmarksErrorTitle");
+  elements.viewModeLabel.textContent = t("errorEyebrow");
   elements.resultCount.textContent = "";
+  elements.reorderHint.hidden = true;
   elements.bookmarkGrid.replaceChildren();
 
   const message = document.createElement("p");
   message.className = "empty-state";
-  message.textContent = "请刷新页面，或检查扩展权限。";
+  message.textContent = t("loadBookmarksErrorMessage");
   elements.bookmarkGrid.append(message);
 }

@@ -1,8 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "书签同步标签页",
+  "name": "__MSG_extensionName__",
   "version": "1.1.6",
-  "description": "同步展示 Chrome 书签，支持固定书签、搜索和拖拽排序。",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
   "permissions": ["bookmarks", "storage"],
   "chrome_url_overrides": {
     "newtab": "newtab.html"

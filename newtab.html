@@ -1,40 +1,43 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>新标签页</title>
+    <title>Bookmark Dashboard</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="top-panel" aria-label="固定书签">
+      <section class="top-panel" aria-label="Pinned bookmarks" data-i18n-aria-label="pinnedBookmarksAriaLabel">
         <div class="pinned-header">
           <div>
-            <p class="eyebrow">固定书签</p>
-            <h1>书签</h1>
+            <p class="eyebrow" data-i18n="pinnedBookmarksEyebrow">Pinned bookmarks</p>
+            <h1 data-i18n="appTitle">Bookmarks</h1>
           </div>
           <label class="search-wrap">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" autocomplete="off" placeholder="搜索书签">
+            <input id="searchInput" type="search" autocomplete="off" placeholder="Search bookmarks" data-i18n-placeholder="searchPlaceholder" aria-label="Search bookmarks" data-i18n-aria-label="searchAriaLabel">
           </label>
         </div>
         <div id="pinnedBar" class="pinned-bar" aria-live="polite"></div>
       </section>
 
       <section class="content-shell">
-        <aside class="sidebar-panel" aria-label="书签文件夹">
-          <div class="panel-title">文件夹</div>
+        <aside class="sidebar-panel" aria-label="Bookmark folders" data-i18n-aria-label="foldersAriaLabel">
+          <div class="panel-title" data-i18n="foldersTitle">Folders</div>
           <nav id="sidebar" class="folder-tree"></nav>
         </aside>
 
-        <section class="bookmark-panel" aria-label="书签">
+        <section class="bookmark-panel" aria-label="Bookmarks" data-i18n-aria-label="bookmarksAriaLabel">
           <header class="bookmark-panel-header">
             <div>
-              <p id="viewModeLabel" class="eyebrow">文件夹</p>
-              <h2 id="contentTitle">书签</h2>
+              <p id="viewModeLabel" class="eyebrow" data-i18n="folderEyebrow">Folder</p>
+              <h2 id="contentTitle" data-i18n="appTitle">Bookmarks</h2>
             </div>
-            <p id="resultCount" class="result-count"></p>
+            <div class="result-meta">
+              <p id="resultCount" class="result-count"></p>
+              <p id="reorderHint" class="reorder-hint" data-i18n="reorderHint">Drag to change the order in Chrome bookmarks</p>
+            </div>
           </header>
           <div id="bookmarkGrid" class="bookmark-grid"></div>
         </section>

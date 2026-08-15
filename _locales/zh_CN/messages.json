@@ -1,0 +1,60 @@
+{
+  "extensionName": { "message": "书签桌面 – 新标签页" },
+  "extensionDescription": { "message": "把 Chrome 书签变成可搜索、注重隐私的新标签页桌面。" },
+  "localeCode": { "message": "zh-CN" },
+  "pageTitle": { "message": "书签桌面" },
+  "pinnedBookmarksAriaLabel": { "message": "固定书签" },
+  "pinnedBookmarksEyebrow": { "message": "固定书签" },
+  "appTitle": { "message": "书签" },
+  "searchPlaceholder": { "message": "搜索书签" },
+  "searchAriaLabel": { "message": "搜索书签" },
+  "foldersAriaLabel": { "message": "书签文件夹" },
+  "foldersTitle": { "message": "文件夹" },
+  "bookmarksAriaLabel": { "message": "书签" },
+  "folderEyebrow": { "message": "文件夹" },
+  "searchEyebrow": { "message": "搜索" },
+  "searchResultsTitle": {
+    "message": "“$QUERY$”的搜索结果",
+    "placeholders": { "query": { "content": "$1" } }
+  },
+  "bookmarkCountOne": {
+    "message": "$COUNT$ 个书签",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "bookmarkCountOther": {
+    "message": "$COUNT$ 个书签",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reorderHint": { "message": "拖拽会改变 Chrome 书签中的实际顺序" },
+  "initializationError": { "message": "初始化书签桌面失败" },
+  "moveBookmarkError": { "message": "移动书签失败" },
+  "refreshBookmarksError": { "message": "刷新书签失败" },
+  "loadBookmarksErrorTitle": { "message": "无法加载书签" },
+  "errorEyebrow": { "message": "错误" },
+  "loadBookmarksErrorMessage": { "message": "请刷新页面，或检查扩展权限。" },
+  "noMatchingBookmarks": { "message": "没有匹配的书签" },
+  "emptyFolder": { "message": "这个文件夹里没有书签" },
+  "untitledBookmark": { "message": "未命名" },
+  "pinBookmark": { "message": "固定书签" },
+  "unpin": { "message": "取消固定" },
+  "pinSpecific": {
+    "message": "固定 $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "unpinSpecific": {
+    "message": "取消固定 $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "bookmarkIconFallback": { "message": "书" },
+  "emptyPinnedBar": { "message": "从下方书签列表固定常用书签" },
+  "noFolders": { "message": "没有文件夹" },
+  "expandFolder": {
+    "message": "展开 $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "collapseFolder": {
+    "message": "折叠 $TITLE$",
+    "placeholders": { "title": { "content": "$1" } }
+  },
+  "untitledFolder": { "message": "未命名文件夹" }
+}

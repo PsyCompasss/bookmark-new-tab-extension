@@ -1,4 +1,5 @@
 import { getFolderChildren } from "../treeBuilder.js";
+import { t } from "../i18n.js";
 
 export function renderSidebar(container, root, selectedFolderId, expandedIds, onSelectFolder, onToggleFolder) {
   container.replaceChildren();
@@ -6,7 +7,7 @@ export function renderSidebar(container, root, selectedFolderId, expandedIds, on
   const topLevelFolders = getFolderChildren(root);
 
   if (!topLevelFolders.length) {
-    container.append(createEmptyState("没有文件夹"));
+    container.append(createEmptyState(t("noFolders")));
     return;
   }
 
@@ -34,7 +35,7 @@ function createFolderItem(folder, selectedFolderId, expandedIds, onSelectFolder,
   toggleButton.className = "folder-toggle";
   toggleButton.type = "button";
   toggleButton.textContent = hasChildren ? (isExpanded ? "⌄" : "›") : "";
-  toggleButton.ariaLabel = hasChildren ? `${isExpanded ? "折叠" : "展开"}${folder.title}` : "";
+  toggleButton.ariaLabel = hasChildren ? t(isExpanded ? "collapseFolder" : "expandFolder", folder.title) : "";
   toggleButton.disabled = !hasChildren;
   toggleButton.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -47,7 +48,7 @@ function createFolderItem(folder, selectedFolderId, expandedIds, onSelectFolder,
   label.className = "folder-label";
   label.type = "button";
   label.title = folder.title;
-  label.textContent = folder.title || "未命名文件夹";
+  label.textContent = folder.title || t("untitledFolder");
   label.addEventListener("click", () => onSelectFolder(folder));
 
   row.append(toggleButton, label);

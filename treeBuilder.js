@@ -1,3 +1,5 @@
+import { t } from "./i18n.js";
+
 export function buildTree(nodes) {
   const roots = Array.isArray(nodes) ? nodes : [nodes];
   return roots.map(normalizeNode).filter(Boolean);
@@ -10,7 +12,7 @@ function normalizeNode(node) {
 
   const normalized = {
     id: node.id,
-    title: node.title || "书签"
+    title: node.title || t("appTitle")
   };
 
   if (node.url) {

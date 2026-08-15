@@ -1,6 +1,7 @@
 import { getBookmarkChildren } from "../treeBuilder.js";
 import { isPinned } from "../pinned.js";
 import { bindBookmarkOpen } from "../bookmarkNavigation.js";
+import { t } from "../i18n.js";
 
 export function renderBookmarkGrid(container, options) {
   const {
@@ -16,7 +17,7 @@ export function renderBookmarkGrid(container, options) {
   container.classList.toggle("is-search-mode", mode === "search");
 
   if (!bookmarks.length) {
-    container.append(createEmptyState(mode === "search" ? "没有匹配的书签" : "这个文件夹里没有书签"));
+    container.append(createEmptyState(mode === "search" ? t("noMatchingBookmarks") : t("emptyFolder")));
     return;
   }
 
@@ -37,6 +38,9 @@ function createBookmarkCard({ bookmark, pinnedIds, draggable, parentId, onToggle
   card.className = "bookmark-card";
   card.dataset.bookmarkId = bookmark.id;
   card.draggable = draggable;
+  if (draggable) {
+    card.title = t("reorderHint");
+  }
 
   const openButton = document.createElement("button");
   openButton.className = "bookmark-open";
@@ -50,7 +54,7 @@ function createBookmarkCard({ bookmark, pinnedIds, draggable, parentId, onToggle
 
   const title = document.createElement("span");
   title.className = "bookmark-title";
-  title.textContent = bookmark.title || bookmark.url || "未命名";
+  title.textContent = bookmark.title || bookmark.url || t("untitledBookmark");
 
   openButton.append(icon, title);
 
@@ -59,8 +63,8 @@ function createBookmarkCard({ bookmark, pinnedIds, draggable, parentId, onToggle
   pinButton.className = "pin-button";
   pinButton.classList.toggle("is-pinned", pinned);
   pinButton.type = "button";
-  pinButton.title = pinned ? "取消固定" : "固定书签";
-  pinButton.ariaLabel = pinned ? `取消固定${bookmark.title}` : `固定${bookmark.title}`;
+  pinButton.title = pinned ? t("unpin") : t("pinBookmark");
+  pinButton.ariaLabel = pinned ? t("unpinSpecific", bookmark.title) : t("pinSpecific", bookmark.title);
   pinButton.textContent = pinned ? "★" : "☆";
   pinButton.addEventListener("click", () => onTogglePinned(bookmark));
 
@@ -127,7 +131,7 @@ export function getBookmarkIconText(bookmark) {
   try {
     return new URL(bookmark.url).hostname.replace(/^www\./, "").slice(0, 1).toUpperCase();
   } catch {
-    return "书";
+    return t("bookmarkIconFallback");
   }
 }
 

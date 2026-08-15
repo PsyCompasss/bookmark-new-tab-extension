@@ -339,6 +339,23 @@ h2 {
   font-size: 13px;
 }
 
+.result-meta {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 4px;
+  justify-items: end;
+}
+
+.reorder-hint {
+  margin: 0;
+  color: var(--faint);
+  font-size: 11px;
+}
+
+.reorder-hint[hidden] {
+  display: none;
+}
+
 .bookmark-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -453,6 +470,10 @@ h2 {
 
   .search-wrap {
     width: 100%;
+  }
+
+  .result-meta {
+    justify-items: start;
   }
 
   .pinned-bar {
